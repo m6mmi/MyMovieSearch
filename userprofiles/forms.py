@@ -37,7 +37,6 @@ class CustomUserChangeForm(UserChangeForm):
             user_profile, created = UserProfile.objects.get_or_create(user=user)
             user_profile.bio = self.cleaned_data['bio']
             user_profile.birth_date = self.cleaned_data['birth_date']
-            print(self.cleaned_data['profile_picture'])
             if self.cleaned_data['profile_picture']:
                 user_profile.profile_picture = os.path.basename(self.cleaned_data['profile_picture'].name)
             else:
