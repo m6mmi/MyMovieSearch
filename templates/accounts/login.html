@@ -5,12 +5,12 @@
 {% block content %}
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card shadow-lg">
                 <div class="card-header text-center bg-success-subtle text-black-50">
                     <h2>Login</h2>
                 </div>
-                <div class="card-body">
+                <div class="card-body bg-secondary bg-gradient" style="--bs-bg-opacity: .3;">
                     <form method="POST">
                         {% csrf_token %}
                         {{ form.non_field_errors }}
@@ -33,7 +33,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="card-footer text-center">
+                <div class="card-footer text-center bg-success-subtle text-black-50">
                     <small class="text-muted">Don't have an account? <a href="{% url 'accounts:register' %}">Register here</a></small>
                 </div>
             </div>

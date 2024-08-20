@@ -1,0 +1,6 @@
+<!-- accounts/templates/accounts/activation_email.html -->
+<p>Hi {{ user.username }},</p>
+<p>Please click the link below to activate your account:</p>
+<p><a href="{{ activation_link }}" target="_blank" onclick="window.open('{{ activation_link }}', '_blank'); return false;">Activate your account</a></p>
+<p>If the link does not open in a new tab, please copy and paste the following URL into your browser:</p>
+<p>{{ activation_link }}</p>

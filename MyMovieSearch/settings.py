@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'userprofiles.apps.UserprofilesConfig',
     'mainpage.apps.MainpageConfig',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -142,3 +143,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # AUTH_USER_MODEL = 'accounts.Account'
 
 LOGIN_URL = '/accounts/login/'
+
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 2500
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+
