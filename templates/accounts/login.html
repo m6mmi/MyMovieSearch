@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load form_tags %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header text-center bg-success-subtle text-black-50">
+                    <h2>Login</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="mb-3 row">
+                            <label for="{{ form.username.id_for_label }}" class="col-sm-3 col-form-label">{{ form.username.label }}</label>
+                            <div class="col-sm-9">
+                                {{ form.username|add_class:"form-control" }}
+                                {{ form.username.errors }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="{{ form.password.id_for_label }}" class="col-sm-3 col-form-label">{{ form.password.label }}</label>
+                            <div class="col-sm-9">
+                                {{ form.password|add_class:"form-control" }}
+                                {{ form.password.errors }}
+                            </div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-block">Login</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <small class="text-muted">Don't have an account? <a href="{% url 'accounts:register' %}">Register here</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

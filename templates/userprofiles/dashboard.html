@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if request.user.is_authenticated %}
+        {{ user.username }}
+    {% else %}
+        Hello, Guest
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+{#    <p>username: {{ user.username }}</p>#}
+{#    <p>email:    {{ user.email }}</p>#}
+{#    <p>joined:   {{ user.date_joined }}</p>#}
+{#    <p>bio:      {{ user_profile.bio }}</p>#}
+{#    <p>birth:    {{ user_profile.birth_date }}</p>#}
+{#    <p>prof_pic: {{ user_profile.profile_picture }}</p>#}
+{#    <p><img class="rounded-2" style="max-width: 150px" src="{% static user_profile.profile_picture %}"  alt="{{ user.username }}"/> </p>#}
+{#    {{ user_profile.favorite_movies }}#}
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col">
+                <div class="card shadow-lg bg-secondary bg-gradient" style="--bs-bg-opacity: .3;">
+                
+                    <div class="card-header text-center bg-success-subtle text-black-50">
+                        <div class="row">
+                            <div class="col-3">
+                                <img class="rounded-2" style="max-width: 100px" src="{% static user_profile.profile_picture %}" alt="{{ user.username }}"/>
+                            </div>
+                            <div class="col-9">
+                                <h2>{{ user.username }}'s Watchlist</h2>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card-body">
+                        <div class="row row-cols-3 row-cols-md-6 row-cols-lg-8 row-cols-xl-10 g-3">
+                            {% for movie in user_profile.favorite_movies %}
+                                <div class="col">
+                                    <div class="card shadow-lg mb-2 bg-secondary bg-gradient" style="--bs-bg-opacity: .3;">
+                                        <div class="row align-items-start">
+                                            <div class="col">
+                                                {% if movie.poster_image != None %}
+                                                    <a href="{% url 'moviedetails:movie_details' movie.movie_id %}">
+                                                        <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_image }}" alt="{{ movie.title }} poster" class="rounded w-100" style="max-width: 200px;">
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

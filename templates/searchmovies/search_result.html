@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Search: {{ query|title }}{% endblock %}
+
+{% block content %}
+    <h3 class="pt-3">Search results: {{ query|title }}</h3>
+    <div id="search-results">
+        {% for movie in results %}
+            <div class="card shadow-lg mb-2 bg-secondary bg-gradient" style="--bs-bg-opacity: .3;">
+                <div class="d-flex">
+                    <div>
+                        {% if movie.poster_image != None %}
+                            <a href="{% url 'moviedetails:movie_details' movie.movie_id %}">
+                                <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_image }}" alt="{{ movie.title }} 
+                                poster" class="rounded" style="max-width: 100px;">
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="m-2">
+                        <h2 style="font-size: 1.2em">
+                            <a href="{% url 'moviedetails:movie_details' movie.movie_id %}" class="text-decoration-none">{{ movie.title }}</a>
+                            <span class="fs-6 fw-lighter">{{ movie.year }}</span><br>
+                        </h2>
+                        <p class="overview">{{ movie.overview }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

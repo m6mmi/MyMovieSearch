@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ details.title }}{% endblock %}
+
+{% block content %}
+    <div class="container mt-3 border-5 p-2 shadow-lg rounded-2 bg-secondary bg-gradient" style="--bs-bg-opacity: .3;">
+        {% if details.poster_image == None %}
+            <div>
+                <div class="me-3 ms-3">
+        {% else %}
+            <div class="row">
+                <div class="col-lg-3 col-md-4">
+                    <img src="https://image.tmdb.org/t/p/w500{{ details.poster_image }}" alt="{{ details.title }}"
+                     class="rounded-2 " style="max-width: 200px">
+                </div>
+                <div class="col-lg-8 col-md-8">
+        {% endif %}
+                <h1>{{ details.title }} </h1>
+                    <br><span class="fw-lighter fs-6">({{ details.year }})</span>
+                <p>Genre:
+                {% for genre in details.genre %}
+                    {{ genre }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+                </p>
+                <hr>
+                <p>
+                    <h6>{{ details.overview }}</h6>
+            </div>
+        </div>
+        <div class="p-3">
+            <p><h5>Cast: </h5>
+            {% for actor in casts %}
+                (<strong>{{ actor.name }}</strong> -- {{ actor.character }}){% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </div>
+        {% if request.user.is_authenticated %}
+            <form method="post" action="{% url 'userprofiles:add_to_favorites' username=user.username %}">
+                {% csrf_token %}
+                <input type="hidden" name="movie_id" value="{{ details.movie_id }}">
+                <input type="hidden" name="title" value="{{ details.title }}">
+                <input type="hidden" name="poster_image" value="{{ details.poster_image }}">
+                <button type="submit" class="btn btn-outline-success mt-3 ps-5 pe-5 shadow-lg">{{ watchlist_button_text }}</button>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}
