@@ -11,15 +11,6 @@
 
 
 {% block content %}
-{#    <p>username: {{ user.username }}</p>#}
-{#    <p>email:    {{ user.email }}</p>#}
-{#    <p>joined:   {{ user.date_joined }}</p>#}
-{#    <p>bio:      {{ user_profile.bio }}</p>#}
-{#    <p>birth:    {{ user_profile.birth_date }}</p>#}
-{#    <p>prof_pic: {{ user_profile.profile_picture }}</p>#}
-{#    <p><img class="rounded-2" style="max-width: 150px" src="{% static user_profile.profile_picture %}"  alt="{{ user.username }}"/> </p>#}
-{#    {{ user_profile.favorite_movies }}#}
-
     <div class="container-fluid mt-4">
         <div class="row">
             <div class="col">
@@ -28,7 +19,7 @@
                     <div class="card-header text-center bg-success-subtle text-black-50">
                         <div class="row">
                             <div class="col-3">
-                                <img class="rounded-2" style="max-width: 100px" src="{% static user_profile.profile_picture %}" alt="{{ user.username }}"/>
+                                <img class="rounded-2" style="max-width: 100px" src="{% static profile_picture %}" alt="{{ user.username }}"/>
                             </div>
                             <div class="col-9">
                                 <h2>{{ user.username }}'s Watchlist</h2>

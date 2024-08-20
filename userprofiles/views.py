@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -7,7 +8,7 @@ from django.views.generic import TemplateView
 
 from accounts.models import User
 from userprofiles.forms import CustomUserChangeForm
-from userprofiles.models import UserProfile
+from userprofiles.models import UserProfile, FavoriteMovie
 
 
 class UserDetailsView(UserPassesTestMixin, TemplateView):
@@ -60,20 +61,24 @@ class EditProfileView(UserPassesTestMixin, View):
         return render(request, self.template_name, {'form': form})
 
 
-class DashboardView(LoginRequiredMixin, TemplateView):
+class DashboardView(TemplateView):
     template_name = 'userprofiles/dashboard.html'
 
     def get_context_data(self, **kwargs):
+        username = self.kwargs.get('username')
+        user = get_object_or_404(User, username__iexact=username)
         context = super().get_context_data(**kwargs)
-        user_profile = get_object_or_404(UserProfile, user=self.request.user)
-        context['user_profile'] = user_profile
+        user_movies = get_object_or_404(FavoriteMovie, user=user)
+        context['user_profile'] = user_movies
+        context['user'] = user
+        profile_picture = UserProfile.objects.get(user=user).profile_picture
+        context['profile_picture'] = profile_picture
 
         return context
 
 
 @method_decorator(login_required, name='dispatch')
 class AddToFavoritesView(View):
-    print('AddToFavoritesView')
     def post(self, request, *args, **kwargs):
         movie_id = request.POST.get('movie_id')
         title = request.POST.get('title')
@@ -82,7 +87,7 @@ class AddToFavoritesView(View):
         if not movie_id:
             return redirect('index')
 
-        user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+        user_profile, created = FavoriteMovie.objects.get_or_create(user=request.user)
         favorite_movies = user_profile.favorite_movies
 
         if user_profile.is_movie_in_watchlist(movie_id):
@@ -94,3 +99,5 @@ class AddToFavoritesView(View):
         user_profile.save()
 
         return redirect('moviedetails:movie_details', movie_id=movie_id)
+
+
