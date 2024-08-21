@@ -3,8 +3,7 @@
 {% block title %}Search: {{ query|title }}{% endblock %}
 
 {% block content %}
-    <h3 class="pt-3">Search results: {{ query|title }}</h3>
-    <div id="search-results">
+    <div id="search-results" class="mt-3">
         {% for movie in results %}
             <div class="card shadow-lg mb-2 bg-secondary bg-gradient" style="--bs-bg-opacity: .3;">
                 <div class="d-flex">

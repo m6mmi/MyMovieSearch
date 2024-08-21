@@ -9,5 +9,6 @@ class SearchResultsView(View):
     def get(self, request, *args, **kwargs):
         query = request.GET.get('query')
         results = search_movie(query) if query else []
+
         return render(request, 'searchmovies/search_result.html',
                       {'results': results, 'query': query})

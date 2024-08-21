@@ -61,14 +61,13 @@ class EditProfileView(UserPassesTestMixin, View):
         return render(request, self.template_name, {'form': form})
 
 
-class DashboardView(TemplateView):
-    template_name = 'userprofiles/dashboard.html'
+class BookmarkView(LoginRequiredMixin, TemplateView):
+    template_name = 'userprofiles/bookmarks.html'
 
     def get_context_data(self, **kwargs):
-        username = self.kwargs.get('username')
-        user = get_object_or_404(User, username__iexact=username)
+        user = self.request.user
         context = super().get_context_data(**kwargs)
-        user_movies = get_object_or_404(FavoriteMovie, user=user)
+        user_movies = get_object_or_404(UserProfile, user=user)
         context['user_profile'] = user_movies
         context['user'] = user
         profile_picture = UserProfile.objects.get(user=user).profile_picture
@@ -78,7 +77,7 @@ class DashboardView(TemplateView):
 
 
 @method_decorator(login_required, name='dispatch')
-class AddToFavoritesView(View):
+class AddToBookmarkView(View):
     def post(self, request, *args, **kwargs):
         movie_id = request.POST.get('movie_id')
         title = request.POST.get('title')
@@ -87,7 +86,7 @@ class AddToFavoritesView(View):
         if not movie_id:
             return redirect('index')
 
-        user_profile, created = FavoriteMovie.objects.get_or_create(user=request.user)
+        user_profile, created = UserProfile.objects.get_or_create(user=request.user)
         favorite_movies = user_profile.favorite_movies
 
         if user_profile.is_movie_in_watchlist(movie_id):

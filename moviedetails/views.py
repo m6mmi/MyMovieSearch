@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 
 from moviedetails.utils import details_movie, cast_list
-from userprofiles.models import UserProfile, FavoriteMovie
+from userprofiles.models import FavoriteMovie, UserProfile
 
 
 # Create your views here.
@@ -15,14 +15,14 @@ class MovieDetailsView(TemplateView):
         casts = cast_list(movie_id)
 
         if self.request.user.is_authenticated:
-            user_movies = FavoriteMovie.objects.get(user=self.request.user)
+            user_movies = UserProfile.objects.get(user=self.request.user)
             is_in_watchlist = user_movies.is_movie_in_watchlist(movie_id)
 
             if is_in_watchlist:
-                watchlist_button_text = 'Remove from Watchlist'
+                watchlist_button_text = 'Remove from Bookmarks'
                 context['watchlist_button_text'] = watchlist_button_text
             else:
-                watchlist_button_text = 'Add to Watchlist'
+                watchlist_button_text = 'Add to Bookmarks'
                 context['watchlist_button_text'] = watchlist_button_text
 
         context['details'] = details
