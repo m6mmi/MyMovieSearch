@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 
 from moviedetails.utils import details_movie, cast_list
-from userprofiles.models import FavoriteMovie, UserProfile
+from userprofiles.models import UserProfile
 
 
 # Create your views here.

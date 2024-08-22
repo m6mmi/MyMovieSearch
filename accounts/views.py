@@ -13,7 +13,6 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from userprofiles.models import FavoriteMovie
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
 
 
@@ -31,7 +30,6 @@ class RegisterView(View):
             user = form.save(commit=False)
             user.is_active = False
             user.save()
-            FavoriteMovie.objects.create(user=user)
             activate_email(request, user, form.cleaned_data.get('email'))
             # return redirect(reverse_lazy('index'))
         return render(request, self.template_name, {'form': form})

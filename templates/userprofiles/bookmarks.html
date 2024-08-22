@@ -1,12 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
 {% block title %}
-    {% if request.user.is_authenticated %}
-        {{ user.username }}
-    {% else %}
-        Hello, Guest
-    {% endif %}
+        {{ user.username }} Bookmark's
 {% endblock %}
 
 

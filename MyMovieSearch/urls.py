@@ -24,4 +24,5 @@ urlpatterns = [
     path('account/', include('accounts.urls'), name='account'),
     path('user/', include('userprofiles.urls'), name='user'),
     path('', IndexView.as_view(), name='index'),
+    path('watchlist/', include('watchlist.urls'), name='watchlist'),
 ]

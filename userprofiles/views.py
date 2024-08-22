@@ -8,7 +8,7 @@ from django.views.generic import TemplateView
 
 from accounts.models import User
 from userprofiles.forms import CustomUserChangeForm
-from userprofiles.models import UserProfile, FavoriteMovie
+from userprofiles.models import UserProfile
 
 
 class UserDetailsView(UserPassesTestMixin, TemplateView):
@@ -98,5 +98,3 @@ class AddToBookmarkView(View):
         user_profile.save()
 
         return redirect('moviedetails:movie_details', movie_id=movie_id)
-
-

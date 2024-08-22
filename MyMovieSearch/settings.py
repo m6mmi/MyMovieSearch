@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'userprofiles.apps.UserprofilesConfig',
     'mainpage.apps.MainpageConfig',
     'django_extensions',
+    'watchlist.apps.WatchlistConfig',
 ]
 
 MIDDLEWARE = [

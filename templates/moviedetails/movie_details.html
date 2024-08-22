@@ -35,12 +35,22 @@
             {% endfor %}
         </div>
         {% if request.user.is_authenticated %}
-            <form method="post" action="{% url 'userprofiles:add_to_favorites' username=user.username %}">
+            <form method="post" action="{% url 'userprofiles:add_to_bookmarks' username=user.username %}">
                 {% csrf_token %}
                 <input type="hidden" name="movie_id" value="{{ details.movie_id }}">
                 <input type="hidden" name="title" value="{{ details.title }}">
                 <input type="hidden" name="poster_image" value="{{ details.poster_image }}">
                 <button type="submit" class="btn btn-outline-success mt-3 ps-5 pe-5 shadow-lg">{{ watchlist_button_text }}</button>
+                
+            </form>
+        {% endif %}
+        {% if request.user.is_authenticated %}
+            <form method="post" action="{% url 'watchlist:add_to_watchlist' username=user.username %}">
+                {% csrf_token %}
+                <input type="hidden" name="movie_id" value="{{ details.movie_id }}">
+                <input type="hidden" name="title" value="{{ details.title }}">
+                <input type="hidden" name="poster_image" value="{{ details.poster_image }}">
+                <button type="submit" class="btn btn-outline-success mt-3 ps-5 pe-5 shadow-lg">Add to Watchlist</button>
             </form>
         {% endif %}
     </div>
