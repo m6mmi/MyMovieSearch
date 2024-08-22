@@ -1,8 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
+from django.contrib.auth.models import User
+from django.shortcuts import redirect, get_object_or_404
 from django.views import View
 from django.views.generic import ListView
-
 from .models import WatchList
 
 
@@ -11,9 +11,20 @@ class WatchlistView(ListView):
     model = WatchList
     template_name = 'watchlist/watchlist.html'
     context_object_name = 'watchlist'
+    context_profile_picture = 'profile_picture'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(WatchlistView, self).get_context_data(**kwargs)
+        username = self.kwargs.get('username')
+        user = get_object_or_404(User, username__iexact=username)
+        context['profile_picture'] = user.userprofile.profile_picture
+        context['user'] = user
+        return context
 
     def get_queryset(self):
-        return WatchList.objects.filter(user_id=self.request.user.id)
+        username = self.kwargs.get('username')
+        user = get_object_or_404(User, username__iexact=username)
+        return WatchList.objects.filter(user_id=user.id)
 
 
 
@@ -29,8 +40,19 @@ class AddToWatchlistView(LoginRequiredMixin, View):
                                                          defaults={'title': title, 'poster_image': poster_image})
         # If the movie already exists, add the user to the movie
         if created:
-            movie.save()
+            print('Movie created')
+            movie.user_id.add(user_id)
+        else:
+            if movie.user_id.filter(id=user_id).exists():
+                # If the user is in the list, remove the user
+                print('User removed')
+                movie.user_id.remove(user_id)
+                if not movie.user_id.exists():
+                    # If there are no users in the list, delete the movie
+                    print('Movie deleted')
+                    movie.delete()
+            else:
+                print('User added')
+                movie.user_id.add(user_id)
 
-        movie.user_id.add(user_id)
-
-        return redirect('watchlist:watchlist', username=request.user.username)
+        return redirect('moviedetails:movie_details', movie_id=movie_id)

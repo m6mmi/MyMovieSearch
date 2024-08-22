@@ -40,7 +40,7 @@
                 <input type="hidden" name="movie_id" value="{{ details.movie_id }}">
                 <input type="hidden" name="title" value="{{ details.title }}">
                 <input type="hidden" name="poster_image" value="{{ details.poster_image }}">
-                <button type="submit" class="btn btn-outline-success mt-3 ps-5 pe-5 shadow-lg">{{ watchlist_button_text }}</button>
+                <button type="submit" class="btn btn-outline-success mt-3 ps-5 pe-5 shadow-lg">{{ bookmark_button_text }}</button>
                 
             </form>
         {% endif %}
@@ -50,7 +50,7 @@
                 <input type="hidden" name="movie_id" value="{{ details.movie_id }}">
                 <input type="hidden" name="title" value="{{ details.title }}">
                 <input type="hidden" name="poster_image" value="{{ details.poster_image }}">
-                <button type="submit" class="btn btn-outline-success mt-3 ps-5 pe-5 shadow-lg">Add to Watchlist</button>
+                <button type="submit" class="btn btn-outline-success mt-3 ps-5 pe-5 shadow-lg">{{ watchlist_button_text }}</button>
             </form>
         {% endif %}
     </div>

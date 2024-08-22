@@ -1,14 +1,48 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Watchlist{% endblock %}
+{% block title %}{{ user.username }} Watchlist{% endblock %}
 
 {% block content %}
-    <h2>Watchlist</h2>
-    <ul>
-        {% for movie in watchlist %}
-            <li>
-                {{ movie.id }} - {{ movie.title }} - {{ movie.poster_image }}
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col">
+                <div class="card shadow-lg bg-secondary bg-gradient" style="--bs-bg-opacity: .3;">
+                    
+                    <div class="card-header text-center bg-success-subtle text-black-50 d-flex p-0">
+                        
+                        <div>
+                            <img class="rounded-2" style="max-height: 100px" src="{% static profile_picture %}" alt="{{ user.username }}"/>
+                        </div>
+                        <div class="m-auto">
+                            <h2>{{ user.username }}'s Watchlist</h2>
+                        </div>
+                        
+                    </div>
+                
+                    <div class="card-body">
+                        <div class="row row-cols-3 row-cols-md-6 row-cols-lg-8 row-cols-xl-10 g-3">
+                            {% for movie in watchlist %}
+                                <div class="col">
+                                    <div class="card shadow-lg mb-2 bg-secondary bg-gradient" style="--bs-bg-opacity: .3;">
+                                        <div class="row align-items-start">
+                                            <div class="col">
+                                                {% if movie.poster_image != None %}
+                                                    <a href="{% url 'moviedetails:movie_details' movie.movie_id %}">
+                                                        <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_image }}" alt="{{ movie.title }} poster" class="rounded w-100" style="max-width: 200px;">
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

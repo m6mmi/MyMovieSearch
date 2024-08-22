@@ -10,6 +10,6 @@ class UserProfile(models.Model):
     profile_picture = models.ImageField(upload_to='static/img/profile_pictures', blank=True, null=True, default='placeholder.png')
     favorite_movies = models.JSONField(default=list)
 
-    def is_movie_in_watchlist(self, movie_id):
+    def is_movie_in_bookmarks(self, movie_id):
         is_in_list = any(str(movie['movie_id']) == str(movie_id) for movie in self.favorite_movies)
         return is_in_list

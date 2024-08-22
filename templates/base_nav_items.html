@@ -5,10 +5,16 @@
     </li>
     {% if request.user.is_authenticated %}
         <li class="nav-item">
-            <a class="nav-link {% if request.path == '/user/'|add:request.user.username|add:'/dashboard/' %}active{% endif %}" href="{% url 'userprofiles:bookmarks' username=request.user.username %}">Bookmarks</a>
+            <a class="nav-link {% if request.path == '/user/'|add:request.user.username|add:'/dashboard/' %}active{% endif %}" 
+               href="{% url 'userprofiles:bookmarks' username=request.user.username %}">Bookmarks</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if request.path == '/user/'|add:request.user.username|add:'/' %}active{% endif %}" href="{% url 'userprofiles:profile' username=request.user.username %}">Profile</a>
+            <a class="nav-link {% if request.path == '/user/'|add:request.user.username|add:'/dashboard/' %}active{% endif %}" 
+               href="{% url 'watchlist:watchlist' username=request.user.username %}">Watchlist</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/user/'|add:request.user.username|add:'/' %}active{% endif %}" 
+               href="{% url 'userprofiles:profile' username=request.user.username %}">Profile</a>
         </li>
         <li><hr class="dropdown-divider"></li>
         <li class="nav-item">

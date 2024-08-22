@@ -7,3 +7,7 @@ class WatchList(models.Model):
     title = models.CharField(max_length=255)
     poster_image = models.CharField(max_length=255, default='')
     user_id = models.ManyToManyField(User, related_name='movies')
+
+    @classmethod
+    def is_movie_in_watchlist(cls, movie_id_from_view, user):
+        return cls.objects.filter(movie_id=movie_id_from_view, user_id=user).exists()

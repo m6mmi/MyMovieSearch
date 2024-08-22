@@ -14,6 +14,11 @@
             top: 0;
             z-index: 1020; /* Ensure the navbar stays above other content */
         }
+        @media (max-width: 850px) {
+            .navbar-brand {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -21,7 +26,7 @@
     <div id="navbar-slideshow" class="position-sticky w-100 h-100 rounded-2">
         <nav class="navbar navbar-expand-md sticky-top bg-success-subtle shadow-lg border-bottom border-black text-overlay">
             <div class="container-fluid">
-                <a class="navbar-brand overflow-hidden">{% include 'base_greet.html' %}</a>
+                <a class="navbar-brand ">{% include 'base_greet.html' %}</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -32,7 +37,7 @@
             </div>
         </nav>
     </div>
-    <div class="container">
+    <div class="container mb-3">
         {% block content %}{% endblock %}
     </div>
 </body>

@@ -76,8 +76,7 @@ class BookmarkView(LoginRequiredMixin, TemplateView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')
-class AddToBookmarkView(View):
+class AddToBookmarkView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         movie_id = request.POST.get('movie_id')
         title = request.POST.get('title')
@@ -89,7 +88,7 @@ class AddToBookmarkView(View):
         user_profile, created = UserProfile.objects.get_or_create(user=request.user)
         favorite_movies = user_profile.favorite_movies
 
-        if user_profile.is_movie_in_watchlist(movie_id):
+        if user_profile.is_movie_in_bookmarks(movie_id):
             favorite_movies = [movie for movie in favorite_movies if movie['movie_id'] != movie_id]
         else:
             favorite_movies.append({'movie_id': movie_id, 'title': title, 'poster_image': poster_image})
