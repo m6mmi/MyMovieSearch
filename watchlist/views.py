@@ -56,3 +56,22 @@ class AddToWatchlistView(LoginRequiredMixin, View):
                 movie.user_id.add(user_id)
 
         return redirect('moviedetails:movie_details', movie_id=movie_id)
+
+
+# Add a new view to handle the removal of movies from the watchlist in `watchlist/views.py`
+class RemoveFromWatchlistView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        movie_id = kwargs.get('movie_id')
+        user_id = request.user.id
+
+        # Get the movie from the WatchList model
+        movie = get_object_or_404(WatchList, movie_id=movie_id)
+
+        # Remove the user from the movie's watchlist
+        if movie.user_id.filter(id=user_id).exists():
+            movie.user_id.remove(user_id)
+            if not movie.user_id.exists():
+                # If there are no users in the list, delete the movie
+                movie.delete()
+
+        return redirect('watchlist:watchlist', username=request.user.username)

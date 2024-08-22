@@ -1,3 +1,4 @@
+<!-- Update the template file `watchlist.html` -->
 {% extends 'base.html' %}
 {% load static %}
 
@@ -8,22 +9,22 @@
         <div class="row">
             <div class="col">
                 <div class="card shadow-lg bg-secondary bg-gradient" style="--bs-bg-opacity: .3;">
-                    
+
                     <div class="card-header text-center bg-success-subtle text-black-50 d-flex p-0">
-                        
+
                         <div>
                             <img class="rounded-2" style="max-height: 100px" src="{% static profile_picture %}" alt="{{ user.username }}"/>
                         </div>
                         <div class="m-auto">
                             <h2>{{ user.username }}'s Watchlist</h2>
                         </div>
-                        
+
                     </div>
-                
+
                     <div class="card-body">
                         <div class="row row-cols-3 row-cols-md-6 row-cols-lg-8 row-cols-xl-10 g-3">
                             {% for movie in watchlist %}
-                                <div class="col">
+                                <div class="col position-relative">
                                     <div class="card shadow-lg mb-2 bg-secondary bg-gradient" style="--bs-bg-opacity: .3;">
                                         <div class="row align-items-start">
                                             <div class="col">
@@ -35,12 +36,15 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <form method="post" action="{% url 'watchlist:remove_from_watchlist' movie.movie_id %}" class="position-absolute top-0 end-0">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">X</button>
+                                    </form>
                                 </div>
                             {% endfor %}
                         </div>
                     </div>
 
-                
                 </div>
             </div>
         </div>
