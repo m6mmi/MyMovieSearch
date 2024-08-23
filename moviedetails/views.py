@@ -34,10 +34,8 @@ class MovieDetailsView(TemplateView):
                 watchlist_button_text = 'Add to Watchlist'
                 context['watchlist_button_text'] = watchlist_button_text
 
-
         context['movie_id'] = movie_id
         context['details'] = details
         context['casts'] = casts
-
 
         return context
