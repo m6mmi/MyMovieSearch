@@ -88,7 +88,7 @@
                     <span class="fw-lighter fs-6">({{ review.rating }}/10)</span>
                 </h5>
                 <p>{{ review.comment }}</p>
-                <span class="fw-lighter fst-italic fs-6 justify-content-end d-flex">({{ review.created_at }})</span> 
+                <span class="fw-lighter fst-italic fs-6 justify-content-end d-flex">({{ review.created_at|date:"l, d-m-Y, H:i" }})</span> 
             </div>
         {% endfor %}
     </div>
@@ -102,6 +102,5 @@
         .horizontal-radio label {
             margin-right: 10px; /* Adjust spacing between radio buttons as needed */
         }
-    </style>    
-   
+    </style>
 {% endblock %}

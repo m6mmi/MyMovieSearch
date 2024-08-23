@@ -19,8 +19,6 @@ class MovieDetailsView(TemplateView):
         details = details_movie(movie_id)
         casts = cast_list(movie_id)
         reviews_list = Review.objects.filter(movie_id=movie_id).order_by('-created_at')
-        print(reviews_list.values())
-
 
         if self.request.user.is_authenticated:
             user_movies = UserProfile.objects.get(user=self.request.user)
@@ -60,6 +58,3 @@ class MovieDetailsView(TemplateView):
             form.save()
             return redirect(request.path_info)
         return self.render_to_response(self.get_context_data(form=form))
-
-
-
