@@ -29,7 +29,7 @@ class RegisterView(View):
         if form.is_valid():
             user = form.save(commit=False)
             # Make the user inactive until email is confirmed
-            user.is_active = True
+            user.is_active = False
             user.save()
             activate_email(request, user, form.cleaned_data.get('email'))
             # return redirect(reverse_lazy('index'))
